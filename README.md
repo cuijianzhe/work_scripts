@@ -25,7 +25,7 @@ author: cuijianzhe.
 > 
 > - 状态：**{ITEM.LASTVALUE}**
 >
-![](http://blog.cjzshilong.cn/images/limi.png)
+![](http://blog.cjzshilong.cn/images/xx.png)
 >
 
 
