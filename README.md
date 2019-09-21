@@ -9,8 +9,9 @@ author: cuijianzhe.
 
 ## dingtalk.py
 **像钉钉发送markdown消息**
+
 默认标题：网络设备故障问题: {EVENT.NAME}
-'''
+
 <font color=#dd0000 size=3 >网络设备故障问题：{TRIGGER.NAME}
 </font>
 > 服务端报警内容如下，请及时处理！
@@ -26,5 +27,5 @@ author: cuijianzhe.
 >
 ![](http://blog.cjzshilong.cn/images/limi.png)
 >
-'''
+
 
