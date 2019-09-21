@@ -8,7 +8,7 @@ dingcard.py: 独立跳转ActionCard类型 传参到钉钉自定义机器人
 author: cuijianzhe.
 
 ## dingtalk.py
-**像钉钉发送markdown消息**
+**向钉钉发送markdown消息**
 
 默认标题：网络设备故障问题: {EVENT.NAME}
 
