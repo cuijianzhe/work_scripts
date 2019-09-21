@@ -27,5 +27,7 @@ author: cuijianzhe.
 >
 ![](http://blog.cjzshilong.cn/images/xx.png)
 >
+如图：
+https://github.com/cuijianzhe/discover_server/blob/master/zabbix_ding.png
 
-
+[](https://github.com/cuijianzhe/discover_server/blob/master/zabbix_ding.png)
