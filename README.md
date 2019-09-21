@@ -30,4 +30,4 @@ author: cuijianzhe.
 如图：
 https://github.com/cuijianzhe/discover_server/blob/master/zabbix_ding.png
 
-[](https://github.com/cuijianzhe/discover_server/blob/master/zabbix_ding.png)
+>[](https://github.com/cuijianzhe/discover_server/blob/master/zabbix_ding.png)
