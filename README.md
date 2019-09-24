@@ -51,7 +51,7 @@ author: cuijianzhe.
 
 ## dingtalk.py
 **向钉钉发送markdown消息**
-'''
+'''bash
 默认标题：网络设备故障问题: {EVENT.NAME}
 
 <font color=#dd0000 size=3 >网络设备故障问题：{TRIGGER.NAME}
@@ -73,6 +73,7 @@ author: cuijianzhe.
 #### 用户：limi
 #### 密码：jhzxxb@100
 '''
+
 如图：
 https://github.com/cuijianzhe/discover_server/blob/master/zabbix_ding.png
 
