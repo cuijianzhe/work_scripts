@@ -12,15 +12,13 @@ python3实现针对华为AC的snmp oid值进行对无线AP进行自动发现
 ## 3.dingtalk.py
 可以向钉钉发送markdown消息
 
-dingcard.py: 独立跳转ActionCard类型文本 传参到钉钉自定义机器人
-
 ## 如图：
 
 ![](https://github.com/cuijianzhe/discover_server/blob/master/img/action.png)
 
 ## 效果如下：
 ![](https://github.com/cuijianzhe/discover_server/blob/master/img/cccc.png)
-
+> dingcard.py: 独立跳转ActionCard类型文本 传参到钉钉自定义机器人
 ## 4.mysqldump.sh 数据库备份
 通过定时脚本实现数据库的日常备份
 
