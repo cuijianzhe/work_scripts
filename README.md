@@ -8,18 +8,17 @@ my first github,
 **Huawei_AP_discovery.py:Automatic discovery of Huawei AP on Python 3---自动发现华为无线AP
 python3实现针对华为AC的snmp oid值进行对无线AP进行自动发现
 
-dingcard.py: **独立跳转ActionCard类型 传参到钉钉自定义机器人
 
-
-
-author: cuijianzhe.
 
 ## dingtalk.py
 **向钉钉发送markdown消息**
 
 
+dingcard.py: **独立跳转ActionCard类型文本 传参到钉钉自定义机器人
 
 如图：
 https://github.com/cuijianzhe/discover_server/blob/master/zabbix_ding.png
 
 ![](https://github.com/cuijianzhe/discover_server/blob/master/img/action.png)
+效果如下：
+![](https://github.com/cuijianzhe/discover_server/blob/master/img/cccc.png)
