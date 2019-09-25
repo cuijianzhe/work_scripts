@@ -26,7 +26,7 @@ python3实现针对华为AC的snmp oid值进行对无线AP进行自动发现
 ## 4.mysqldump.sh 数据库备份
 **通过定时脚本实现数据库的日常备份**
 ## 5.实现汉子转换拼音
-'''
+'''python
 #!/bin/env python3
 import pypinyin
 str = '崔建哲，中国，狸米，大傻，杨和苏'
@@ -36,4 +36,5 @@ for n in pin:
     kk += ''.join(n)
 print(kk)
 '''
+
 效果：'cuijianzhe，zhongguo，limi，dasha，yanghesu'
