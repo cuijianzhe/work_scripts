@@ -1,4 +1,4 @@
-my first github,实现使用脚本满足日常使用
+my scripts on github,实现使用脚本满足日常使用
 
 ## 1. port_discovery.py
 port_discovery.py:Automatic port discovery based on Python 3 ---端口以及服务名自动发现
