@@ -18,7 +18,7 @@ python3实现针对华为AC的snmp oid值进行对无线AP进行自动发现
 
 ## 效果如下：
 ![](https://github.com/cuijianzhe/discover_server/blob/master/img/cccc.png)
-> dingcard.py: 独立跳转ActionCard类型文本 传参到钉钉自定义机器人
+> dingcard.py: 独立跳转ActionCard类型文本 传参到钉钉自定义机器人,本脚本实现web状态码检测，并且发送钉钉消息
 ## 4.mysqldump.sh 数据库备份
 通过定时脚本实现数据库的日常备份
 
