@@ -32,3 +32,8 @@ for n in pin:
 print(kk)
 ```
 效果：`cuijianzhe，zhongguo，limi，dasha，yanghesu`
+## 6.docker-solo.sh ❤️ 
+* 检测 Solo 版本是否有新版本；
+* 可自动删除更新后的 Solo 镜像包；
+* 自动检测 Solo 是否安装部署成功，不成功则再次 pull 镜像
+* 检测 lute-http 是否正常运行
