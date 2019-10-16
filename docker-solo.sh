@@ -19,7 +19,7 @@ solo(){
     b3log/solo --listen_port=8080 --server_scheme=https --lute_http=  --server_host=www.cjzshilong.cn --server_port=
 
 }
-
+    sleep 5
 del(){
     num=`docker images |grep b3log/solo|wc -l`
     if [ "$num" -gt 1 ]; then
@@ -55,21 +55,29 @@ solo_time(){
 
 }
 #----------------------------判断solo是否有新版本-------------------------------------
-isUpgrad=$(docker pull b3log/solo|grep "Downloaded")
-if [[ -z  $isUpgrad ]] 
-then 
-    echo $start_time :detection version is the latest version
-else
-    solo
-    del
-    solo_time
-fi
+
+upgrade(){
+    isUpgrad=$(docker pull b3log/solo|grep "Downloaded")
+    if [[ -z  $isUpgrad ]] 
+    then 
+        echo $start_time :detection version is the latest version
+    else
+        solo
+        del
+        solo_time
+    fi
+}
 #---------------------判断docker镜像是否正常运行---------------------------
-server=`docker ps | grep b3log/solo`
-if [ -z "$server" ]; then  #如果查询结果为空，则停留10秒继续pull镜像
-   sleep 10
-   echo '----------docker-solo状态异常，重新安装------------'
-   solo
-   solo_time
-fi
+jiance(){
+    server=`docker ps | grep b3log/solo`
+    if [ -z "$server" ]; then  #如果查询结果为空，则停留10秒继续pull镜像
+        sleep 5
+        echo '----------docker-solo状态异常，重新安装------------'
+        solo
+        solo_time
+    fi
+}
+upgrade
+jiance
+
 #--------------------------------------------------------------------------
