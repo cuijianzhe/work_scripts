@@ -40,16 +40,12 @@ lute(){
 }
 
 lute_http=`docker ps | grep b3log/lute-http`
-if [ -z "$lute_http" ]; then 
-   sleep 3
-   lute
-fi
 
 solo_time(){
     end_time=`date +'%Y-%m-%d %H:%M:%S'`
     start_seconds=$(date --date="$start_time" +%s);
     end_seconds=$(date --date="$end_time" +%s);
-    echo "升级所用时间为："$((end_seconds-start_seconds))"s"
+    echo "脚本运行所用时间为："$((end_seconds-start_seconds))"s"
     echo "开始时间为: $start_time ,结束时间为：$end_time"
     echo " "
 
@@ -64,20 +60,24 @@ upgrade(){
     else
         solo
         del
-        solo_time
     fi
 }
 #---------------------判断docker镜像是否正常运行---------------------------
-jiance(){
+Server_test(){
     server=`docker ps | grep b3log/solo`
     if [ -z "$server" ]; then  #如果查询结果为空，则停留10秒继续pull镜像
         sleep 5
         echo '----------docker-solo状态异常，重新安装------------'
         solo
-        solo_time
     fi
+    lute_http=`docker ps | grep b3log/lute-http`
+    if [ -z "$lute_http" ]; then
+       sleep 3
+       lute
+    fi
+
 }
 upgrade
-jiance
-
+Server_test
+solo_time
 #--------------------------------------------------------------------------
