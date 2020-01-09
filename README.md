@@ -39,3 +39,4 @@ for n in pin:
 print(kk)
 ```
 效果：`cuijianzhe，zhongguo，limi，dasha，yanghesu`
+## 7. 每日5:21自动发送情话到自己喜欢的女孩子邮箱
