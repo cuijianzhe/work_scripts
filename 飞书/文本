@@ -1,0 +1,68 @@
+#!/bin/env python3
+# App ID :
+# cli_9ec3b6ff887e100d
+# App Secret:
+# YJJ7UTMTIlDxw4gdyJ2bUeLb5zOuLYUi
+import requests
+import json
+import linecache
+import random
+file = '/scripts/feishu/word'
+def get_token():
+    data = {"app_id":"cli_xxxxxxxxxxxxxxxx","app_secret":"YJJ7xxxxxxxxxxxxxxxxxxxxxxYUi"}
+    headers = {"Content-Type": "application/json"}
+    url_token = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/"
+    try:
+        res = requests.post(url_token, json=data, headers=headers)
+        if res.status_code == 200:
+            token = (json.loads(res.text)).get('tenant_access_token')
+            return token
+    except:
+        print('请求失败')
+
+headers_group = {
+    "Authorization" : "Bearer %s"%(get_token()),
+    "Content-Type" : "application/json"
+}
+def get_chatid():
+    url_group = "https://open.feishu.cn/open-apis/chat/v4/list?"
+    try:
+        res_group = requests.get(url_group,headers=headers_group)
+        if res_group.status_code == 200:
+            chatid = ((json.loads(res_group.text)).get('data').get('groups'))[0].get('chat_id')
+            return chatid
+    except:
+        print('请求失败')
+
+def getuserid(mobiles):   #根据手机号get用户id
+    userurl = "https://open.feishu.cn/open-apis/user/v1/batch_get_id?mobiles=%s"%mobiles
+    res_data = requests.get(url=userurl, headers=headers_group)
+    userid = json.loads(res_data.text)['data']['mobile_users'][mobiles][0]['user_id']
+    return userid
+
+def send_messages(userID):
+    with open(file, 'r', encoding='utf-8') as good:
+        word = linecache.getline(file, random.randint(1, len(good.readlines()))).replace(',', ' ')
+    data1 = {"user_id": userID,
+        "msg_type": "text",
+        "content": {
+            "text": "%s <at user_id=\"%s\">test</at>"%(word,userID)
+        }
+    }
+    #发送到群组
+    # data1 = {
+    #     "chat_id":get_chatid(),
+    #     "msg_type":"text",
+    #     "content":{
+    #         "text": "%s <at user_id=\"%s\">test</at>"%(word,userID)
+    #     }
+    # }
+    url_mess = "https://open.feishu.cn/open-apis/message/v4/send/"
+    res_mess = requests.post(url_mess,json=data1,headers=headers_group)
+if __name__ == "__main__":
+    mobiles = ["xxxxxxxx2", "xxxxxxxxx"]
+    for iphone in mobiles:
+        token = get_token()
+        chatid = get_chatid()
+        user_ID = getuserid(iphone)
+        send_messages(user_ID)
