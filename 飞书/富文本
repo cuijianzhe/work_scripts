@@ -1,0 +1,94 @@
+
+import requests
+import json
+import os
+import random
+import linecache
+def get_token():
+    data = {"app_id":"cli_xxxxxxxxxxxxx","app_secret":"YxxxxxxxxxxxxxxxxxxxuLYUi"}
+    headers = {"Content-Type": "application/json"}
+    url_token = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/"
+    try:
+        res = requests.post(url_token, json=data, headers=headers)
+        if res.status_code == 200:
+            token = (json.loads(res.text)).get('tenant_access_token')
+            return token
+    except:
+        print('请求失败')
+headers_group = {
+    "Authorization" : "Bearer %s"%(get_token()),
+    "Content-Type" : "application/json"
+}
+
+def getuserid(mobile):   #根据手机号get用户id
+    userurl = "https://open.feishu.cn/open-apis/user/v1/batch_get_id?mobiles=%s"%mobile
+    res_data = requests.get(url=userurl, headers=headers_group)
+    userid = json.loads(res_data.text)['data']['mobile_users'][mobile][0]['user_id']
+    return userid
+
+
+def uploadimg():
+    imgname = random.choice(os.listdir('./output'))
+    # 上传图片接口，get image key
+    with open("./output/%s"%imgname,'rb') as p:
+        image = p.read()
+    imgurl = "https://open.feishu.cn/open-apis/image/v4/put/"
+    headers = {"Authorization" : "Bearer %s"%get_token()}
+    files = {
+        'image':image
+    }
+    imgdata = {
+        "image_type": "message"
+    }
+    resp = requests.post(url=imgurl,headers=headers,files=files,data=imgdata)
+    resp.raise_for_status()
+    content = resp.json()
+    return content['data']['image_key']
+
+def sendmess(path,user_id,image_key=None):
+    with open(path, encoding='utf-8') as yuju:
+        qinghua = linecache.getline(path, random.randint(1, len(yuju.readlines()))).split('、')[1].strip().replace(' ','  ')
+    message_url = "https://open.feishu.cn/open-apis/message/v4/send/"
+    # 发送富文本消息
+    data = {
+        "user_id": user_id,
+        "msg_type": "post",
+        "content": {
+            "post": {
+                "zh_cn": {
+                    "title": "表情包来了",
+                    "content": [
+                        [
+                            {
+                                "tag": "text",
+                                "un_escape": True,
+                                "text": "%s&nbsp;:"%qinghua
+                            },
+                            {
+                                "tag": "at",
+                                "user_id": user_id
+
+                            }
+                        ],
+                        [
+                            {
+                                "tag": "img",
+                                "image_key": image_key,
+                                "width": 1080,
+                                "height": 1080
+                            }
+                        ]
+                    ]
+                }
+            }
+        }
+    }
+    request = requests.post(url=message_url, headers=headers_group, json=data)
+    with open('./log','w',encoding='utf-8') as f:
+        f.write(request.text)
+if __name__ == '__main__':
+    token = get_token()
+    mobiles = "xxxxxxxxxx"
+    user_ID = getuserid(mobiles)
+    imgkey = uploadimg()
+    sendmess('wenben',user_ID,imgkey)
