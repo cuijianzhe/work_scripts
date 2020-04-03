@@ -97,7 +97,7 @@ class feishu():
         request = requests.post(url=message_url, headers=headers_group, json=data)
     @staticmethod
     def get_token():
-        data = {"app_id":"cli_9ec3b6ff887e100d","app_secret":"YJJ7UTMTIlDxw4gdyJ2bUeLb5zOuLYUi"}
+        data = {"app_id":"cli_9xxxxd","app_secret":"YJJ7UTMTIlDxw4gdxxxb5zOuLYUi"}
         headers = {"Content-Type": "application/json"}
         url_token = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal/"
         try:
