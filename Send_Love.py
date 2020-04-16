@@ -38,7 +38,7 @@ def symbol(file):
 def _email(content):
     my_sender = '598941324@qq.com'
     my_pass = 'mypassword'
-    my_user = ['cuijianzhe@limikeji.com','5989413240@qq.com']
+    my_user = ['cuijianzhe@166.com','5989413240@qq.com']
     msg = MIMEText(content, 'plain', 'utf-8')
     msg['From'] = formataddr(["爱你的哲", my_sender])
     msg['To'] = ','.join(my_user)
