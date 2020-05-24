@@ -119,7 +119,7 @@ searchUser() {
 Welcome! This script is for querying VPN users
 Please double check before continuing!
 ================================================
-VPN user to  update:
+VPN user has been queried:
 Username: $VPN_USER
 Password: $passwd
 Query completed. You can need them to connect!
@@ -130,17 +130,20 @@ EOF
              fi
 }
 
-# Backup config files
-conf_bk "/etc/ppp/chap-secrets"
-conf_bk "/etc/ipsec.d/passwd"
 case "$1" in
         -add)
+               conf_bk "/etc/ppp/chap-secrets"  # Backup config files
+               conf_bk "/etc/ipsec.d/passwd"
                userAdd "$@"
                ;;
         -del)
+               conf_bk "/etc/ppp/chap-secrets"
+               conf_bk "/etc/ipsec.d/passwd"
                delUser "$@"
                ;;
         -update)
+               conf_bk "/etc/ppp/chap-secrets"
+               conf_bk "/etc/ipsec.d/passwd"
                updateUser "$@"
                ;;
         -search)
