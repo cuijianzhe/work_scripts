@@ -28,7 +28,7 @@ read -r response
 case $response in
   [yY][eE][sS]|[yY])
     echo
-    echo "Adding or updating VPN user..."
+    echo "Adding VPN user..."
     echo
     ;;
   *)
@@ -91,7 +91,7 @@ read -r response
 case $response in
   [yY][eE][sS]|[yY])
     echo
-    echo "Adding or updating VPN user..."
+    echo "updating VPN user..."
     echo
     ;;
   *)
