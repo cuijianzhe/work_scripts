@@ -1,112 +1,45 @@
 #!/bin/python3
 #######################################################
-# This program is to check the ping in the Live Room #
-# Date: 2020-4-18                                     #
+# This program is to check the ping in the Live Room  #
+# Date: 2020-4-21                                     #
 # Author: cuijianzhe                                  #
 # Email: 598941324@qq.com                             #
 #######################################################
+import threading
 import os
 import subprocess
 import re
 import datetime as dt
 import time
-nowdate = dt.datetime.now().strftime('%Y%m%d')
-class LinkState(object):
-    def __init__(self,baidu,ip,url,gateway):
-        self.ip = ip
-        self.baidu = baidu
-        self.url = url
-        self.gateway = gateway
 
-    # 获取链路状态
-    def getBaiduState(self):
-        #运行ping程序
-        p = subprocess.Popen(["ping.exe",'-n','1','-w','1',baidu],
-             stdin = subprocess.PIPE,
-             stdout = subprocess.PIPE,
-             stderr = subprocess.PIPE,
-             shell = True)
-        #得到ping的结果
-        out = p.stdout.read().decode('gbk')
-        # print(out.decode('gbk'))
-        regex = re.search(r'来自..+|请求..+',out)
-        if regex:
-            ping = regex.group()
-            now_time = dt.datetime.now().strftime('%F %T')
-            file_name = 'ping_baidu_%s.txt' % nowdate
-            with open('C:\limi_ppt_log\%s' % file_name, 'a') as f:
-                f.write(str(now_time) + '  ' + str(ping))
-    def getUrlState(self):
-        #运行ping程序
-        p = subprocess.Popen(["ping.exe",'-n','1','-w','1',url],
-             stdin = subprocess.PIPE,
-             stdout = subprocess.PIPE,
-             stderr = subprocess.PIPE,
-             shell = True)
-        #得到ping的结果
-        out = p.stdout.read().decode('gbk')
-        # print(out.decode('gbk'))
-        regex = re.search(r'来自..+|请求..+',out)
-        if regex:
-            ping = regex.group()
-            now_time = dt.datetime.now().strftime('%F %T')
-            file_name = 'ping_url_%s.txt' % nowdate
-            with open('C:\limi_ppt_log\%s' % file_name, 'a') as f:
-                f.write(str(now_time) + '  ' + str(ping))
-    def getGatewayState(self):
-        #运行ping程序
-        p = subprocess.Popen(["ping.exe",'-n','1','-w','1',gateway],
-             stdin = subprocess.PIPE,
-             stdout = subprocess.PIPE,
-             stderr = subprocess.PIPE,
-             shell = True)
-        #得到ping的结果
-        out = p.stdout.read().decode('gbk')
-        # print(out.decode('gbk'))
-        regex = re.search(r'来自..+|请求..+',out)
-        if regex:
-            ping = regex.group()
-            now_time = dt.datetime.now().strftime('%F %T')
-            file_name = 'ping_gateway_%s.txt' % nowdate
-            with open('C:\limi_ppt_log\%s' % file_name, 'a') as f:
-                f.write(str(now_time) + '  ' + str(ping))
-    def getIpState(self):
-        #运行ping程序
-        p = subprocess.Popen(["ping.exe",'-n','1','-w','1',ip],
-             stdin = subprocess.PIPE,
-             stdout = subprocess.PIPE,
-             stderr = subprocess.PIPE,
-             shell = True)
-        #得到ping的结果
-        out = p.stdout.read().decode('gbk')
-        # print(out.decode('gbk'))
-        regex = re.search(r'来自..+|请求..+',out)
-        if regex:
-            ping = regex.group()
-            now_time = dt.datetime.now().strftime('%F %T')
-            file_name = 'ping_ip_%s.txt' % nowdate
-            with open('C:\limi_ppt_log\%s' % file_name, 'a') as f:
-                f.write(str(now_time) + '  ' + str(ping))
+def ping_host(ip):
+    nowdate = dt.datetime.now().strftime('%Y%m%d')  # 获取文件日期后缀
+    p = subprocess.Popen(["ping.exe", '-n', '1', '-w', '1', ip],
+                         stdin=subprocess.PIPE,
+                         stdout=subprocess.PIPE,
+                         stderr=subprocess.PIPE,
+                         shell=True)
+    out = p.stdout.read().decode('gbk')
+    ping = re.search(r'来自..+|请求..+', out).group()
+    now_time = dt.datetime.now().strftime('%F %T')
+    file_name = 'ping%s_%s.txt' % (ip,nowdate)
+    with open('C:\limi_ppt_log\%s' % file_name, 'a') as f:
+        f.write(str(now_time) + '  ' + str(ping))
 
 if __name__ == '__main__':
-    baidu = 'www.baidu.com'    #要ping的主机
-    url = 'api-teacher.limiketang.com'
-    ip = '47.95.46.151'
-    gateway = '10.200.100.1'
+    hosts = ['www.baidu.com', '10.200.200.1', 'api-teacher.limiketang.com', 'www.qq.com']
     path = "C:\limi_ppt_log"
-    check = LinkState(baidu, url, ip, gateway)
     if os.path.isdir(path):
         while True:
             time.sleep(1)
-            check.getBaiduState()
-            check.getGatewayState()
-            check.getIpState()
-            check.getUrlState()
+            for IP in hosts:
+                #多线程同时执行
+                thread = threading.Thread(target=ping_host,args=(IP,))
+                thread.start()
     else:
         os.mkdir(path)
         while True:
             time.sleep(1)
-            check.getBaiduState()
-            check.getGatewayState()
-            check.getIpState()
-            check.getUrlState()
+            for IP in hosts:
+                thread = threading.Thread(target=ping_host, args=(IP,))
+                thread.start()
